@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: classpath:db/migration/changelogs/01-create-user-and-role-tables.yml
+  - include:
+      file: classpath:db/migration/changelogs/02-create-roles-and-admin-user.yml
