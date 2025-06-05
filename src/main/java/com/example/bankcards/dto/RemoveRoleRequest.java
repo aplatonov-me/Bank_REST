@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class RemoveRoleRequest {
-    @NotBlank
+    @NotNull
     private Role.RoleName role;
 
     @NotNull

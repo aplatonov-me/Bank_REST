@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class AssignRoleRequest {
-    @NotBlank
+    @NotNull
     private Role.RoleName role;
 
     @NotNull
