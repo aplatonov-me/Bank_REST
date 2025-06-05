@@ -184,7 +184,7 @@ class UserServiceTest {
     void assignRole_ValidRequest_ShouldAssignRole() {
         AssignRoleRequest request = new AssignRoleRequest();
         request.setUserId(1L);
-        request.setRole("ADMIN");
+        request.setRole(Role.RoleName.ADMIN);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
         when(roleRepository.findByName(Role.RoleName.ADMIN)).thenReturn(Optional.of(adminRole));
@@ -202,7 +202,7 @@ class UserServiceTest {
     void assignRole_UserNotFound_ShouldThrowException() {
         AssignRoleRequest request = new AssignRoleRequest();
         request.setUserId(999L);
-        request.setRole("ADMIN");
+        request.setRole(Role.RoleName.ADMIN);
 
         when(userRepository.findById(999L)).thenReturn(Optional.empty());
 
@@ -221,20 +221,20 @@ class UserServiceTest {
     void assignRole_RoleAlreadyAssigned_ShouldThrowException() {
         AssignRoleRequest request = new AssignRoleRequest();
         request.setUserId(1L);
-        request.setRole("USER");
+        request.setRole(Role.RoleName.ADMIN);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
-        when(roleRepository.findByName(Role.RoleName.USER)).thenReturn(Optional.of(userRole));
+        when(roleRepository.findByName(Role.RoleName.ADMIN)).thenReturn(Optional.of(userRole));
 
         RoleAlreadyAssignedException exception = assertThrows(
-            RoleAlreadyAssignedException.class, 
+            RoleAlreadyAssignedException.class,
             () -> userService.assignRole(request)
         );
         
         assertThat(exception.getMessage()).contains("USER");
         
         verify(userRepository).findById(1L);
-        verify(roleRepository).findByName(Role.RoleName.USER);
+        verify(roleRepository).findByName(Role.RoleName.ADMIN);
         verifyNoMoreInteractions(userRepository);
     }
 
@@ -244,7 +244,7 @@ class UserServiceTest {
         
         RemoveRoleRequest request = new RemoveRoleRequest();
         request.setUserId(1L);
-        request.setRole("ADMIN");
+        request.setRole(Role.RoleName.ADMIN);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
         when(roleRepository.findByName(Role.RoleName.ADMIN)).thenReturn(Optional.of(adminRole));
@@ -263,7 +263,7 @@ class UserServiceTest {
     void removeRole_UserNotFound_ShouldThrowException() {
         RemoveRoleRequest request = new RemoveRoleRequest();
         request.setUserId(999L);
-        request.setRole("ADMIN");
+        request.setRole(Role.RoleName.ADMIN);
 
         when(userRepository.findById(999L)).thenReturn(Optional.empty());
 
@@ -282,7 +282,7 @@ class UserServiceTest {
     void removeRole_RoleNotAssigned_ShouldThrowException() {
         RemoveRoleRequest request = new RemoveRoleRequest();
         request.setUserId(1L);
-        request.setRole("ADMIN");
+        request.setRole(Role.RoleName.ADMIN);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
         when(roleRepository.findByName(Role.RoleName.ADMIN)).thenReturn(Optional.of(adminRole));

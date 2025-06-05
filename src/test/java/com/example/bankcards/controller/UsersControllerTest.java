@@ -63,7 +63,7 @@ public class UsersControllerTest {
 
         AssignRoleRequest assignRoleRequest = new AssignRoleRequest();
         assignRoleRequest.setUserId(adminId);
-        assignRoleRequest.setRole("ADMIN");
+        assignRoleRequest.setRole(Role.RoleName.ADMIN);
         userService.assignRole(assignRoleRequest);
 
         CreateUserRequest createTestUserRequest = new CreateUserRequest();
@@ -165,7 +165,7 @@ public class UsersControllerTest {
     void testAssignRole() throws Exception {
         AssignRoleRequest assignRoleRequest = new AssignRoleRequest();
         assignRoleRequest.setUserId(testUserId);
-        assignRoleRequest.setRole("ADMIN");
+        assignRoleRequest.setRole(Role.RoleName.ADMIN);
 
         mockMvc.perform(post("/users/assign-role")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -187,7 +187,7 @@ public class UsersControllerTest {
     void testRemoveRole() throws Exception {
         AssignRoleRequest assignRoleRequest = new AssignRoleRequest();
         assignRoleRequest.setUserId(testUserId);
-        assignRoleRequest.setRole("ADMIN");
+        assignRoleRequest.setRole(Role.RoleName.ADMIN);
         userService.assignRole(assignRoleRequest);
 
         MvcResult beforeResult = mockMvc.perform(get("/users/{id}", testUserId))
@@ -200,7 +200,7 @@ public class UsersControllerTest {
 
         RemoveRoleRequest removeRoleRequest = new RemoveRoleRequest();
         removeRoleRequest.setUserId(testUserId);
-        removeRoleRequest.setRole("ADMIN");
+        removeRoleRequest.setRole(Role.RoleName.ADMIN);
 
         mockMvc.perform(post("/users/remove-role")
                 .contentType(MediaType.APPLICATION_JSON)

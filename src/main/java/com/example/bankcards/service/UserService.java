@@ -93,7 +93,7 @@ public class UserService {
             throw new UserNotFoundException("User with Id %d not found".formatted(assignRoleRequest.getUserId()));
         }
 
-        Optional<Role> roleOptional = roleRepository.findByName(Role.RoleName.valueOf(assignRoleRequest.getRole()));
+        Optional<Role> roleOptional = roleRepository.findByName(assignRoleRequest.getRole());
         if (roleOptional.isEmpty()) {
             throw new RoleNotFoundException("Role '%s' not found".formatted(assignRoleRequest.getRole()));
         }
@@ -115,7 +115,7 @@ public class UserService {
             throw new UserNotFoundException("User with Id %d not found".formatted(removeRoleRequest.getUserId()));
         }
 
-        Optional<Role> roleOptional = roleRepository.findByName(Role.RoleName.valueOf(removeRoleRequest.getRole()));
+        Optional<Role> roleOptional = roleRepository.findByName(removeRoleRequest.getRole());
         if (roleOptional.isEmpty()) {
             throw new RoleNotFoundException("Role '%s' not found".formatted(removeRoleRequest.getRole()));
         }
