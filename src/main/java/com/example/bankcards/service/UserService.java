@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -47,6 +48,7 @@ public class UserService {
         return dto;
     }
 
+    @Transactional
     public CreateUserResponse createUser(CreateUserRequest createUserRequest) {
         Optional<User> existingUser = userRepository.findByUsername(createUserRequest.getUsername());
         if (existingUser.isPresent()) {
@@ -83,10 +85,12 @@ public class UserService {
         return response;
     }
 
+    @Transactional
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
+    @Transactional
     public void assignRole(AssignRoleRequest assignRoleRequest) {
         Optional<User> userOptional = userRepository.findById(assignRoleRequest.getUserId());
         if (userOptional.isEmpty()) {
@@ -109,6 +113,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void removeRole(RemoveRoleRequest removeRoleRequest) {
         Optional<User> userOptional = userRepository.findById(removeRoleRequest.getUserId());
         if (userOptional.isEmpty()) {
