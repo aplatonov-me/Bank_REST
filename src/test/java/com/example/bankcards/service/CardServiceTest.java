@@ -281,8 +281,8 @@ class CardServiceTest {
         request.setDestinationCardId(2L);
         request.setAmount(new BigDecimal("100.00"));
         
-        when(cardRepository.findById(1L)).thenReturn(Optional.of(testCard));
-        when(cardRepository.findById(2L)).thenReturn(Optional.of(secondCard));
+        when(cardRepository.findCardForUpdate(1L)).thenReturn(Optional.of(testCard));
+        when(cardRepository.findCardForUpdate(2L)).thenReturn(Optional.of(secondCard));
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("testuser");
         when(userRepository.findByUsername("testuser")).thenReturn(Optional.of(testUser));
@@ -294,7 +294,7 @@ class CardServiceTest {
         assertThat(testCard.getBalance()).isEqualTo(new BigDecimal("900.00"));
         assertThat(secondCard.getBalance()).isEqualTo(new BigDecimal("600.00"));
         
-        verify(cardRepository, times(2)).findById(any());
+        verify(cardRepository, times(2)).findCardForUpdate(any());
         verify(securityContext).getAuthentication();
         verify(authentication).getName();
         verify(userRepository).findByUsername("testuser");
@@ -309,8 +309,8 @@ class CardServiceTest {
         request.setDestinationCardId(2L);
         request.setAmount(new BigDecimal("2000.00")); // More than available
         
-        when(cardRepository.findById(1L)).thenReturn(Optional.of(testCard));
-        when(cardRepository.findById(2L)).thenReturn(Optional.of(secondCard));
+        when(cardRepository.findCardForUpdate(1L)).thenReturn(Optional.of(testCard));
+        when(cardRepository.findCardForUpdate(2L)).thenReturn(Optional.of(secondCard));
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn("testuser");
         when(userRepository.findByUsername("testuser")).thenReturn(Optional.of(testUser));
@@ -322,7 +322,7 @@ class CardServiceTest {
         assertThat(testCard.getBalance()).isEqualTo(new BigDecimal("1000.00"));
         assertThat(secondCard.getBalance()).isEqualTo(new BigDecimal("500.00"));
         
-        verify(cardRepository, times(2)).findById(any());
+        verify(cardRepository, times(2)).findCardForUpdate(any());
         verify(securityContext).getAuthentication();
         verify(authentication).getName();
         verify(userRepository).findByUsername("testuser");
