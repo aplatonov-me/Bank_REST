@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                            .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/api-docs/**").permitAll()
+                            .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/api-docs/**", "/api-docs.yaml").permitAll()
                             .requestMatchers("/users/**").hasAuthority("ADMIN")
                             .requestMatchers(HttpMethod.POST, "/cards").hasAuthority("ADMIN")
                             .requestMatchers(HttpMethod.GET, "/cards").hasAuthority("ADMIN")
