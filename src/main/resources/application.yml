@@ -1,20 +1,15 @@
-# Spring Boot Configuration
 server:
   port: 8080
   servlet:
     context-path: /api
 
-# Spring Configuration
 spring:
-  # Database Configuration
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
 
-
-  # JPA Configuration
   jpa:
     hibernate:
       ddl-auto: validate
@@ -24,23 +19,18 @@ spring:
         format_sql: true
     show-sql: true
 
-  # Liquibase Configuration
   liquibase:
     change-log: classpath:db/migration/main.yml
     enabled: true
 
-
-  # Security Configuration
   security:
     filter:
       order: 10
 
-# JWT Configuration
 jwt:
   secret: secretKeyThatShouldBeVeryLongAndSecureForJWTTokenGeneration
-  expirationMs: 86400000  # 24 hours in milliseconds
+  expirationMs: 86400000
 
-# Logging Configuration
 logging:
   level:
     root: INFO
@@ -49,7 +39,6 @@ logging:
     org.hibernate: INFO
     com.example.bankcards: DEBUG
 
-# Swagger Configuration (SpringDoc OpenAPI)
 springdoc:
   api-docs:
     path: /api-docs
@@ -58,7 +47,6 @@ springdoc:
     enabled: true
   packages-to-scan: com.example.bankcards.controller
 
-# Application-specific properties
 app:
   card:
     # Maximum number of cards per user
@@ -67,8 +55,3 @@ app:
     default-expiration-years: 3
     # Maximum amount for a single transfer
     max-transfer-amount: 100000.00
-  security:
-    # IP rate limiting (requests per minute)
-    rate-limit: 60
-    # Enable encrypted storage for sensitive data
-    encryption-enabled: true

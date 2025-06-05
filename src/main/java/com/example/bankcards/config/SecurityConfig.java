@@ -45,8 +45,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                            .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                            .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/api-docs/**").permitAll()
                             .requestMatchers("/users/**").hasAuthority("ADMIN")
+                            .requestMatchers(HttpMethod.POST, "/cards").hasAuthority("ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/cards").hasAuthority("ADMIN")
+                            .requestMatchers(HttpMethod.DELETE, "/cards/**").hasAuthority("ADMIN")
+                            .requestMatchers("/cards/**").authenticated()
+                            .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+
                 )
                 .addFilterBefore(exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)

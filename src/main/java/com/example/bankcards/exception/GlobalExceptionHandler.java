@@ -1,6 +1,7 @@
 package com.example.bankcards.exception;
 
 import com.example.bankcards.util.ErrorResponseUtil;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+@Hidden
 public class GlobalExceptionHandler {
     private final ErrorResponseUtil errorResponseUtil;
     public GlobalExceptionHandler(ErrorResponseUtil errorResponseUtil) {
@@ -65,6 +67,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RoleNotAssignedException.class)
     public ResponseEntity<Object> handleRoleNotAssignedException(RoleNotAssignedException ex) {
+        return errorResponseUtil.buildErrorResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(CardException.class)
+    public ResponseEntity<Object> handleCardException(CardException ex) {
         return errorResponseUtil.buildErrorResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
